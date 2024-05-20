@@ -8,6 +8,9 @@ public class PlayerController : MonoBehaviour
     private MagicCircleUI magicCircleUI;
     private MouseLook mouseLook;
 
+    public GameObject damageAreaPrefab; // 데미지 장판 Prefab을 할당
+    public Transform cameraTransform; // 카메라 Transform을 할당
+    public LayerMask layerMask; // 무시할 레이어를 설정
 
     void Start()
     {
@@ -28,7 +31,6 @@ public class PlayerController : MonoBehaviour
         {
             mouseLook = GetComponentInChildren<MouseLook>();
         }
-
     }
 
     void Update()
@@ -50,8 +52,13 @@ public class PlayerController : MonoBehaviour
 
     public void CastAttackSpellLong()
     {
-        Debug.Log("공격 속성 원거리 마법 사용!");
-        
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f, layerMask))
+        {
+            Vector3 spawnPosition = hit.point;
+            Instantiate(damageAreaPrefab, spawnPosition, Quaternion.identity);
+            Debug.Log("공격 속성 원거리 마법 사용!");
+        }
     }
 
     public void CastSpeedSpellLong()
@@ -62,7 +69,5 @@ public class PlayerController : MonoBehaviour
     public void CastHealthSpellLong()
     {
         Debug.Log("체력 속성 원거리 마법 사용!");
-        
     }
-
 }

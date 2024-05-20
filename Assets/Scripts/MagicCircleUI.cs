@@ -10,6 +10,7 @@ public class MagicCircleUI : MonoBehaviour
 
     private List<int> selectedPattern = new List<int>();
     private bool isDrawing = false;
+    private bool validPattern = false; // 유효한 패턴 여부
     private HashSet<int> selectedPointsSet = new HashSet<int>(); // 이미 선택된 포인트를 저장하는 집합
     private SpellbookSystem spellbookSystem;
 
@@ -43,6 +44,15 @@ public class MagicCircleUI : MonoBehaviour
             {
                 point.GetComponent<Image>().color = defaultColor; // 모든 버튼의 기본 색 설정
             }
+        }
+    }
+
+    void Update()
+    {
+        if (validPattern && Input.GetMouseButtonDown(0))
+        {
+            spellbookSystem.CastSpellLong();
+            validPattern = false; // 스킬 발동 후 유효한 패턴 플래그 초기화
         }
     }
 
@@ -126,15 +136,15 @@ public class MagicCircleUI : MonoBehaviour
 
         if (selectedPattern.Count == 3 && selectedPattern[0] == 1 && selectedPattern[1] == 4 && selectedPattern[2] == 7)
         {
-            Debug.Log("원거리 마법 발동..");
-            spellbookSystem.CastSpellLong();
-            CloseMagicCircleUI(); // 패턴이 맞으면 UI를 닫습니다.
+            Debug.Log("유효한 패턴.");
+            validPattern = true; // 유효한 패턴 플래그 설정
         }
         else
         {
             Debug.Log("잘못된 패턴 입력");
-            CloseMagicCircleUI(); // 잘못된 패턴일 때도 UI를 닫습니다.
         }
+
+        CloseMagicCircleUI(); // 마법진 UI 닫기
     }
 
     private void CloseMagicCircleUI()
@@ -144,7 +154,6 @@ public class MagicCircleUI : MonoBehaviour
         {
             magicCircleCanvas.SetActive(false);
         }
-        ResetPattern();
     }
 
     private void ResetPattern()
@@ -156,8 +165,6 @@ public class MagicCircleUI : MonoBehaviour
             point.GetComponent<Image>().color = defaultColor; // 모든 버튼의 색을 기본 색으로 변경
         }
     }
-
-
 
     public bool IsDrawing()
     {

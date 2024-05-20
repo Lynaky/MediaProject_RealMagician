@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pin
   - Bomb
+  - Boss
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - UI
   - shootableBombMask
   - shootableSplitMask
-  - 
-  - 
+  - Player
+  - Plane
   - 
   - 
   - 

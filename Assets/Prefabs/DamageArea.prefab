@@ -46,9 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dbd2f18bf89d414b9cc5e2e985924cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageDuration: 3
+  damageDuration: 5
   damageAmount: 10
   damageInterval: 1
+  lifetime: 5
 --- !u!135 &1152758975196432288
 SphereCollider:
   m_ObjectHideFlags: 0

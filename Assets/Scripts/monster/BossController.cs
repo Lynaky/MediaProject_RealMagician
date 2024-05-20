@@ -5,9 +5,9 @@ using UnityEngine;
 public class BossController : MonoBehaviour
 {
     public Transform player;
-    public float moveSpeed = 2f;
-    public float attackRange = 2f;
-    public float attackInterval = 2f;
+    public float moveSpeed = 30f;
+    public float attackRange = 5f;
+    public float attackInterval = 2.667f;
     public float attackDamage = 20f;
 
     private bool isAttacking = false;

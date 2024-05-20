@@ -191,9 +191,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  moveSpeed: 15
-  attackRange: 2
-  attackInterval: 2
+  moveSpeed: 30
+  attackRange: 5
+  attackInterval: 2.667
   attackDamage: 20
 --- !u!114 &8141253856759572294
 MonoBehaviour:
@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87a5afc713d233b4495759e1d7ab1166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 1000
   originalMaterial: {fileID: 2100000, guid: e5d524f701de47b4d9a60c39ae3027df, type: 2}
   damageMaterial: {fileID: 2100000, guid: 35839af56de7130499f4f2c4a780bebf, type: 2}
   damageColorDuration: 0.1

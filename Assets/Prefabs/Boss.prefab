@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  moveSpeed: 30
+  moveSpeed: 25
   attackRange: 5
   attackInterval: 2.667
   attackDamage: 20

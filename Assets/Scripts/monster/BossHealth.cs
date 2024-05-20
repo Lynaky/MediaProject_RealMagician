@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class BossHealth : MonoBehaviour
     public Material damageMaterial; // 피격용 메터리얼
     public float damageColorDuration = 0.5f; // 피격용 메터리얼 지속 시간
     private BossController bossController;
+    public Slider healthSlider; // 보스 체력 슬라이더
 
     void Start()
     {
@@ -33,6 +35,12 @@ public class BossHealth : MonoBehaviour
         {
             Debug.LogError("MutantMesh의 SkinnedMeshRenderer를 찾을 수 없습니다.");
         }
+
+        if (healthSlider != null)
+        {
+            healthSlider.maxValue = maxHealth;
+            healthSlider.value = currentHealth;
+        }
     }
 
     public bool IsAlive()
@@ -44,6 +52,11 @@ public class BossHealth : MonoBehaviour
     {
         currentHealth -= damageAmount;
         Debug.Log("Boss Health: " + currentHealth);
+
+        if (healthSlider != null)
+        {
+            healthSlider.value = currentHealth;
+        }
 
         StartCoroutine(FlashDamageMaterial());
 

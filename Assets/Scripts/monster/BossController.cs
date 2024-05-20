@@ -14,12 +14,14 @@ public class BossController : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private BossHealth bossHealth;
+    private PlayerHealth playerHealth;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         bossHealth = GetComponent<BossHealth>();
+        playerHealth = player.GetComponent<PlayerHealth>();
 
         // Rigidbody Constraints 설정
         rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
@@ -57,8 +59,12 @@ public class BossController : MonoBehaviour
     {
         isAttacking = true;
         Debug.Log("Boss attacking player...");
-        // 플레이어에게 데미지를 주는 로직 추가 (예: 플레이어의 Health 컴포넌트에 접근하여 데미지 적용)
-        // player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
+
+        // 플레이어에게 데미지를 주는 로직 추가
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(attackDamage);
+        }
 
         yield return new WaitForSeconds(attackInterval);
         isAttacking = false;

@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public GameObject healingAreaPrefab; // 체력 회복 장판 Prefab을 할당
     public GameObject AttackbuffEffect; // 공격 버프 이펙트 오브젝트
     public GameObject SpeedbuffEffect; // 속도 버프 이펙트 오브젝트
+    public GameObject HealthbuffEffect; // 체력 버프 이펙트 오브젝트
     public Transform cameraTransform; // 카메라 Transform을 할당
     public LayerMask layerMask; // 무시할 레이어를 설정
     public float buffDuration = 5f; // 버프 지속 시간
@@ -57,6 +58,11 @@ public class PlayerController : MonoBehaviour
         if (SpeedbuffEffect != null)
         {
             SpeedbuffEffect.SetActive(false); // 시작 시 버프 이펙트 비활성화
+        }
+
+        if (HealthbuffEffect != null)
+        {
+            HealthbuffEffect.SetActive(false); // 시작 시 버프 이펙트 비활성화
         }
     }
 
@@ -192,6 +198,34 @@ public class PlayerController : MonoBehaviour
     public void CastHealthSpellBuff()
     {
         Debug.Log("체력 속성 버프 마법 사용!");
+        if (activeBuff != BuffType.None)
+        {
+            StopActiveBuff();
+        }
+        currentBuffCoroutine = StartCoroutine(ApplyHealthBuff());
+    }
+
+    private IEnumerator ApplyHealthBuff()
+    {
+        activeBuff = BuffType.Health;
+        if (HealthbuffEffect != null)
+        {
+            HealthbuffEffect.SetActive(true); // 버프 이펙트 활성화
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            playerHealth.Heal(3);
+            yield return new WaitForSeconds(1f); // 1초 간격으로 5번 회복
+        }
+
+        if (HealthbuffEffect != null)
+        {
+            HealthbuffEffect.SetActive(false); // 버프 이펙트 비활성화
+        }
+
+        activeBuff = BuffType.None;
+        currentBuffCoroutine = null; // 코루틴 참조 해제
     }
 
     private void StopActiveBuff()
@@ -209,6 +243,11 @@ public class PlayerController : MonoBehaviour
             if (SpeedbuffEffect != null && activeBuff == BuffType.Speed)
             {
                 SpeedbuffEffect.SetActive(false);
+            }
+
+            if (HealthbuffEffect != null && activeBuff == BuffType.Health)
+            {
+                HealthbuffEffect.SetActive(false);
             }
 
             // 원래 상태로 복원

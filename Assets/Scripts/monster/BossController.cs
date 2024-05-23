@@ -14,17 +14,24 @@ public class BossController : MonoBehaviour
     private Animator animator;
     private Rigidbody rb;
     private BossHealth bossHealth;
-    private PlayerHealth playerHealth;
+    private float originalMoveSpeed;
+    public GameObject debuffEffect; // 디버프 이펙트 파티클 시스템
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         bossHealth = GetComponent<BossHealth>();
-        playerHealth = player.GetComponent<PlayerHealth>();
+        originalMoveSpeed = moveSpeed;
 
         // Rigidbody Constraints 설정
         rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionY;
+
+        // 디버프 이펙트 비활성화
+        if (debuffEffect != null)
+        {
+            debuffEffect.SetActive(false);
+        }
     }
 
     void Update()
@@ -61,10 +68,7 @@ public class BossController : MonoBehaviour
         Debug.Log("Boss attacking player...");
 
         // 플레이어에게 데미지를 주는 로직 추가
-        if (playerHealth != null)
-        {
-            playerHealth.TakeDamage(attackDamage);
-        }
+        player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
 
         yield return new WaitForSeconds(attackInterval);
         isAttacking = false;
@@ -73,5 +77,25 @@ public class BossController : MonoBehaviour
     public void Die()
     {
         animator.SetTrigger("Die");
+    }
+
+    public void ApplySpeedDebuff(float debuffAmount, float duration)
+    {
+        StartCoroutine(SpeedDebuff(debuffAmount, duration));
+    }
+
+    private IEnumerator SpeedDebuff(float debuffAmount, float duration)
+    {
+        moveSpeed -= debuffAmount;
+        if (debuffEffect != null)
+        {
+            debuffEffect.SetActive(true);
+        }
+        yield return new WaitForSeconds(duration);
+        moveSpeed = originalMoveSpeed;
+        if (debuffEffect != null)
+        {
+            debuffEffect.SetActive(false);
+        }
     }
 }

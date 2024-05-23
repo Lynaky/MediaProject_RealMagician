@@ -34,6 +34,17 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    public void Heal(float healAmount)
+    {
+        currentHealth += healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth); // 체력을 최대 체력으로 제한
+        if (healthSlider != null)
+        {
+            healthSlider.value = currentHealth;
+        }
+        Debug.Log("Player Healed: " + healAmount + ", Current Health: " + currentHealth);
+    }
+
     private void Die()
     {
         Debug.Log("Player Died!");

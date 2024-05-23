@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 331673501329622045}
   - component: {fileID: 1152758975196432288}
   m_Layer: 0
-  m_Name: DamageArea
+  m_Name: AttackLongSkill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,9 +47,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageDuration: 5
-  damageAmount: 10
+  damageAmount: 20
   damageInterval: 1
   lifetime: 5
+  isSpeedDebuff: 0
+  speedDebuffAmount: 10
+  speedDebuffDuration: 3
 --- !u!135 &1152758975196432288
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -70,7 +73,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 4.4779205
-  m_Center: {x: 0.009210587, y: 0, z: -0.02520752}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &250931864797441871
 PrefabInstance:
   m_ObjectHideFlags: 0

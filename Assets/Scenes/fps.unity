@@ -1087,6 +1087,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageAreaPrefab: {fileID: 5295302350808602876, guid: 2c1ce64ca041fcb4d9b1119d1e86311f, type: 3}
+  speedDebuffAreaPrefab: {fileID: 1854168369595794076, guid: 24f52a8fcf1c1a84a8bbf9f642e4173c, type: 3}
+  healingAreaPrefab: {fileID: 2107362358126405833, guid: 5c4015061b6aadb43845141a3d13543b, type: 3}
   cameraTransform: {fileID: 1436862989}
   layerMask:
     serializedVersion: 2
@@ -2553,7 +2555,7 @@ PrefabInstance:
       objectReference: {fileID: 426961068}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: moveSpeed
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7049057227858601307, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: m_AnchorMax.x

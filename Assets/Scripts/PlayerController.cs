@@ -9,8 +9,12 @@ public class PlayerController : MonoBehaviour
     private MouseLook mouseLook;
 
     public GameObject damageAreaPrefab; // 데미지 장판 Prefab을 할당
+    public GameObject speedDebuffAreaPrefab; // 속도 감소 장판 Prefab을 할당
+    public GameObject healingAreaPrefab; // 체력 회복 장판 Prefab을 할당
     public Transform cameraTransform; // 카메라 Transform을 할당
     public LayerMask layerMask; // 무시할 레이어를 설정
+
+    private PlayerHealth playerHealth;
 
     void Start()
     {
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour
         {
             mouseLook = GetComponentInChildren<MouseLook>();
         }
+
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -63,11 +69,34 @@ public class PlayerController : MonoBehaviour
 
     public void CastSpeedSpellLong()
     {
-        Debug.Log("속도 속성 원거리 마법 사용!");
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f, layerMask))
+        {
+            Vector3 spawnPosition = hit.point;
+            GameObject speedDebuffArea = Instantiate(speedDebuffAreaPrefab, spawnPosition, Quaternion.identity);
+            DamageArea damageArea = speedDebuffArea.GetComponent<DamageArea>();
+            if (damageArea != null)
+            {
+                damageArea.isSpeedDebuff = true;
+            }
+            Debug.Log("속도 속성 원거리 마법 사용!");
+        }
     }
-
+    
     public void CastHealthSpellLong()
     {
-        Debug.Log("체력 속성 원거리 마법 사용!");
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f, layerMask))
+        {
+            Vector3 spawnPosition = hit.point;
+            GameObject healingArea = Instantiate(healingAreaPrefab, spawnPosition, Quaternion.identity);
+            DamageArea damageArea = healingArea.GetComponent<DamageArea>();
+            if (damageArea != null)
+            {
+                damageArea.isHealingSpell = true;
+                damageArea.playerHealth = playerHealth;
+            }
+            Debug.Log("체력 속성 원거리 마법 사용!");
+        }
     }
 }

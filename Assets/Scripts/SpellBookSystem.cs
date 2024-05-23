@@ -57,4 +57,23 @@ public class SpellbookSystem : MonoBehaviour
                 break;
         }
     }
+
+    public void CastSpellBuff()
+    {
+        switch (currentSpellbook)
+        {
+            case SpellbookType.Attack:
+                playerController.CastAttackSpellBuff();
+                break;
+            case SpellbookType.Speed:
+                playerController.CastSpeedSpellBuff();
+                break;
+            case SpellbookType.Health:
+                playerController.CastHealthSpellBuff();
+                break;
+            default:
+                Debug.Log("No spellbook equipped.");
+                break;
+        }
+    }
 }

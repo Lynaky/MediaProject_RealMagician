@@ -1089,10 +1089,12 @@ MonoBehaviour:
   damageAreaPrefab: {fileID: 5295302350808602876, guid: 2c1ce64ca041fcb4d9b1119d1e86311f, type: 3}
   speedDebuffAreaPrefab: {fileID: 1854168369595794076, guid: 24f52a8fcf1c1a84a8bbf9f642e4173c, type: 3}
   healingAreaPrefab: {fileID: 2107362358126405833, guid: 5c4015061b6aadb43845141a3d13543b, type: 3}
+  buffEffect: {fileID: 955533821}
   cameraTransform: {fileID: 1436862989}
   layerMask:
     serializedVersion: 2
     m_Bits: 512
+  buffDuration: 5
 --- !u!114 &426961076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1737,6 +1739,16 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859535318}
   m_CullTransparentMesh: 1
+--- !u!1 &955533821 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7155335147208632822, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+  m_PrefabInstance: {fileID: 1114829307}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &955533822 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+  m_PrefabInstance: {fileID: 1114829307}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1082554492
 GameObject:
   m_ObjectHideFlags: 0
@@ -1887,6 +1899,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104596867}
   m_CullTransparentMesh: 1
+--- !u!1001 &1114829307
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 426961068}
+    m_Modifications:
+    - target: {fileID: 7155335147208632822, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_Name
+      value: Buff 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8029142899459995171, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 905e13ab3f9e7af4e87de688fdc340c7, type: 3}
 --- !u!1 &1436862988
 GameObject:
   m_ObjectHideFlags: 0
@@ -2343,6 +2412,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4df07717dbbc6674fb2a181d8d311e9e, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 955533822}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4df07717dbbc6674fb2a181d8d311e9e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1436862989}

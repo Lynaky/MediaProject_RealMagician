@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DamageArea : MonoBehaviour
 {
+    public static float damageMultiplier = 1f; // damageMultiplier를 static 변수로 선언
+
     public float damageDuration = 3f; // 데미지를 주는 시간
     public float damageAmount = 10f; // 데미지 양
     public float damageInterval = 1f; // 데미지를 주는 간격
@@ -52,11 +54,11 @@ public class DamageArea : MonoBehaviour
                     BossHealth bossHealth = enemy.GetComponent<BossHealth>();
                     if (bossHealth != null)
                     {
-                        bossHealth.TakeDamage(damageAmount);
+                        bossHealth.TakeDamage(damageAmount * damageMultiplier); // 데미지에 multiplier 적용
 
                         if (isHealingSpell && playerHealth != null)
                         {
-                            float healAmount = damageAmount / 2;
+                            float healAmount = (damageAmount * damageMultiplier) / 2;
                             playerHealth.Heal(healAmount);
                         }
                     }

@@ -17,6 +17,8 @@ public class BossController : MonoBehaviour
     private float originalMoveSpeed;
     public GameObject debuffEffect; // 디버프 이펙트 파티클 시스템
 
+    private Coroutine speedDebuffCoroutine; // 현재 적용된 속도 디버프 코루틴
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -81,21 +83,26 @@ public class BossController : MonoBehaviour
 
     public void ApplySpeedDebuff(float debuffAmount, float duration)
     {
-        StartCoroutine(SpeedDebuff(debuffAmount, duration));
+        if (speedDebuffCoroutine != null)
+        {
+            StopCoroutine(speedDebuffCoroutine); // 기존 디버프 코루틴 중지
+        }
+        speedDebuffCoroutine = StartCoroutine(SpeedDebuff(debuffAmount, duration));
     }
 
     private IEnumerator SpeedDebuff(float debuffAmount, float duration)
     {
-        moveSpeed -= debuffAmount;
+        moveSpeed = originalMoveSpeed - debuffAmount; // 속도 디버프 갱신
         if (debuffEffect != null)
         {
             debuffEffect.SetActive(true);
         }
         yield return new WaitForSeconds(duration);
-        moveSpeed = originalMoveSpeed;
+        moveSpeed = originalMoveSpeed; // 원래 속도로 복원
         if (debuffEffect != null)
         {
             debuffEffect.SetActive(false);
         }
+        speedDebuffCoroutine = null; // 코루틴 참조 해제
     }
 }

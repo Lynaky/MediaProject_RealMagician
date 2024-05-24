@@ -13,6 +13,8 @@ public class MagicCircleUI : MonoBehaviour
     private bool validPattern = false;
     private bool longPattern = false;
     private bool buffPattern = false;
+    private bool shortPattern = false;
+
 
     private HashSet<int> selectedPointsSet = new HashSet<int>();
     private SpellbookSystem spellbookSystem;
@@ -65,6 +67,12 @@ public class MagicCircleUI : MonoBehaviour
             {
                 spellbookSystem.CastSpellBuff();
                 buffPattern = false;
+                validPattern = false; // 스킬 발동 후 유효한 패턴 플래그 초기화
+            }
+            else if (shortPattern && Input.GetMouseButtonDown(0))
+            {
+                spellbookSystem.CastSpellShort();
+                shortPattern = false;
                 validPattern = false; // 스킬 발동 후 유효한 패턴 플래그 초기화
             }
         }
@@ -159,6 +167,12 @@ public class MagicCircleUI : MonoBehaviour
             Debug.Log("버프 마법 패턴.");
             validPattern = true;
             buffPattern = true;
+        }
+        else if (selectedPattern.Count == 3 && selectedPattern[0] == 3 && selectedPattern[1] == 4 && selectedPattern[2] == 5)
+        {
+            Debug.Log("근접 마법 패턴.");
+            validPattern = true;
+            shortPattern = true;
         }
         else
         {

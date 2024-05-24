@@ -12,13 +12,22 @@ public class PlayerController : MonoBehaviour
     public GameObject damageAreaPrefab; // 데미지 장판 Prefab을 할당
     public GameObject speedDebuffAreaPrefab; // 속도 감소 장판 Prefab을 할당
     public GameObject healingAreaPrefab; // 체력 회복 장판 Prefab을 할당
+
     public GameObject AttackbuffEffect; // 공격 버프 이펙트 오브젝트
     public GameObject SpeedbuffEffect; // 속도 버프 이펙트 오브젝트
     public GameObject HealthbuffEffect; // 체력 버프 이펙트 오브젝트
+
+    public GameObject AttackShortEffect; // 공격 속성 근접 마법 이펙트 오브젝트
+    public GameObject SpeedShortEffect; // 속도 속성 근접 마법 이펙트 오브젝트
+    public GameObject HealthShortEffect; // 체력 속성 근접 마법 이펙트 오브젝트
+
     public Transform cameraTransform; // 카메라 Transform을 할당
     public LayerMask layerMask; // 무시할 레이어를 설정
+    public LayerMask layerMask2; // 무시할 레이어를 설정
     public float buffDuration = 5f; // 버프 지속 시간
     public float speedBuffMultiplier = 1.5f; // 속도 버프 배율
+    public float speedDebuffAmount = 10f; // 속도 디버프 양
+    public float speedDebuffDuration = 3f; // 속도 디버프 지속 시간
 
     private PlayerHealth playerHealth;
     private Coroutine currentBuffCoroutine;
@@ -63,6 +72,21 @@ public class PlayerController : MonoBehaviour
         if (HealthbuffEffect != null)
         {
             HealthbuffEffect.SetActive(false); // 시작 시 버프 이펙트 비활성화
+        }
+
+        if (AttackShortEffect != null)
+        {
+            AttackShortEffect.SetActive(false); // 시작 시 근접 마법 이펙트 비활성화
+        }
+
+        if (SpeedShortEffect != null)
+        {
+            SpeedShortEffect.SetActive(false); // 시작 시 근접 마법 이펙트 비활성화
+        }
+
+        if (HealthShortEffect != null)
+        {
+            HealthShortEffect.SetActive(false); // 시작 시 근접 마법 이펙트 비활성화
         }
     }
 
@@ -264,4 +288,114 @@ public class PlayerController : MonoBehaviour
             currentBuffCoroutine = null;
         }
     }
+
+    public void CastAttackSpellShort()
+    {
+        Debug.Log("공격 속성 근접 마법 사용!");
+
+        if (AttackShortEffect != null)
+        {
+            AttackShortEffect.SetActive(true); // 근접 마법 이펙트 활성화
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6.5f, layerMask2);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Boss"))
+            {
+                BossHealth bossHealth = hitCollider.GetComponent<BossHealth>();
+                if (bossHealth != null)
+                {
+                    bossHealth.TakeDamage(60); // 보스에게 데미지를 줌
+                }
+            }
+        }
+
+        StartCoroutine(DisableAttackShortEffect());
+    }
+
+    private IEnumerator DisableAttackShortEffect()
+    {
+        yield return new WaitForSeconds(1f); // 이펙트 지속 시간
+        if (AttackShortEffect != null)
+        {
+            AttackShortEffect.SetActive(false); // 근접 마법 이펙트 비활성화
+        }
+    }
+
+    public void CastSpeedSpellShort()
+    {
+        Debug.Log("속도 속성 근접 마법 사용!");
+
+        if (SpeedShortEffect != null)
+        {
+            SpeedShortEffect.SetActive(true); // 근접 마법 이펙트 활성화
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6.5f, layerMask2);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Boss"))
+            {
+                BossHealth bossHealth = hitCollider.GetComponent<BossHealth>();
+                if (bossHealth != null)
+                {
+                    bossHealth.TakeDamage(30); // 보스에게 데미지를 줌
+                    BossController bossController = hitCollider.GetComponent<BossController>();
+                    if (bossController != null)
+                    {
+                        bossController.ApplySpeedDebuff(speedDebuffAmount, speedDebuffDuration); // 보스에게 속도 디버프 적용
+                    }
+                }
+            }
+        }
+
+        StartCoroutine(DisableSpeedShortEffect());
+    }
+
+    private IEnumerator DisableSpeedShortEffect()
+    {
+        yield return new WaitForSeconds(1f); // 이펙트 지속 시간
+        if (SpeedShortEffect != null)
+        {
+            SpeedShortEffect.SetActive(false); // 근접 마법 이펙트 비활성화
+        }
+    }
+
+    public void CastHealthSpellShort()
+    {
+        Debug.Log("체력 속성 근접 마법 사용!");
+
+        if (HealthShortEffect != null)
+        {
+            HealthShortEffect.SetActive(true); // 근접 마법 이펙트 활성화
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 6.5f, layerMask2);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Boss"))
+            {
+                BossHealth bossHealth = hitCollider.GetComponent<BossHealth>();
+                if (bossHealth != null)
+                {
+                    float damage = 30; // 보스에게 줄 데미지
+                    bossHealth.TakeDamage(damage); // 보스에게 데미지를 줌
+                    playerHealth.Heal(damage * 0.5f); // 데미지의 절반만큼 플레이어를 회복
+                }
+            }
+        }
+
+        StartCoroutine(DisableHealthShortEffect());
+    }
+
+    private IEnumerator DisableHealthShortEffect()
+    {
+        yield return new WaitForSeconds(1f); // 이펙트 지속 시간
+        if (HealthShortEffect != null)
+        {
+            HealthShortEffect.SetActive(false); // 근접 마법 이펙트 비활성화
+        }
+    }
 }
+

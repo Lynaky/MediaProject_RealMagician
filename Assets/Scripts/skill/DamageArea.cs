@@ -20,7 +20,7 @@ public class DamageArea : MonoBehaviour
 
     private void Start()
     {
-        // 생성된 후 5초 후에 오브젝트를 제거
+        // 생성된 후 lifetime 시간 후에 오브젝트를 제거
         Destroy(gameObject, lifetime);
     }
 

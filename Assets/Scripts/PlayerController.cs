@@ -36,6 +36,17 @@ public class PlayerController : MonoBehaviour
     private enum BuffType { None, Attack, Speed, Health }
     private BuffType activeBuff = BuffType.None;
 
+    public AudioClip LongAttackSound; // 마법진 여는 사운드
+    public AudioClip LongSpeedSound; // 점을 연결할 때 사운드
+    public AudioClip LongHealthSound; // 점을 연결할 때 사운드
+    public AudioClip BuffAttackSound; // 마법진 여는 사운드
+    public AudioClip BuffSpeedSound; // 점을 연결할 때 사운드
+    public AudioClip BuffHealthSound; // 점을 연결할 때 사운드
+    public AudioClip ShortAttackSound; // 마법진 여는 사운드
+    public AudioClip ShortSpeedSound; // 점을 연결할 때 사운드
+    public AudioClip ShortHealthSound; // 점을 연결할 때 사운드
+    private AudioSource audioSource; // 오디오 소스
+
     void Start()
     {
         spellbookSystem = GetComponent<SpellbookSystem>();
@@ -88,6 +99,8 @@ public class PlayerController : MonoBehaviour
         {
             HealthShortEffect.SetActive(false); // 시작 시 근접 마법 이펙트 비활성화
         }
+
+        audioSource = gameObject.AddComponent<AudioSource>(); // 오디오 소스 추가
     }
 
     void Update()
@@ -119,6 +132,7 @@ public class PlayerController : MonoBehaviour
             Vector3 spawnPosition = hit.point;
             Instantiate(damageAreaPrefab, spawnPosition, Quaternion.identity);
             Debug.Log("공격 속성 원거리 마법 사용!");
+            PlayLongAttackSound();
         }
     }
 
@@ -134,7 +148,8 @@ public class PlayerController : MonoBehaviour
             {
                 damageArea.isSpeedDebuff = true;
             }
-            Debug.Log("속도 속성 원거리 마법 사용!");
+            Debug.Log("속도 속성 원거리 마법 사용!"); 
+            PlayLongSpeedSound();
         }
     }
 
@@ -152,12 +167,14 @@ public class PlayerController : MonoBehaviour
                 damageArea.playerHealth = playerHealth;
             }
             Debug.Log("체력 속성 원거리 마법 사용!");
+            PlayLongHealthSound();
         }
     }
 
     public void CastAttackSpellBuff()
     {
         Debug.Log("공격 속성 버프 마법 사용!");
+        PlayBuffAttackSound();
         if (activeBuff != BuffType.None)
         {
             StopActiveBuff();
@@ -192,6 +209,7 @@ public class PlayerController : MonoBehaviour
     public void CastSpeedSpellBuff()
     {
         Debug.Log("속도 속성 버프 마법 사용!");
+        PlayBuffSpeedSound();
         if (activeBuff != BuffType.None)
         {
             StopActiveBuff();
@@ -226,6 +244,7 @@ public class PlayerController : MonoBehaviour
     public void CastHealthSpellBuff()
     {
         Debug.Log("체력 속성 버프 마법 사용!");
+        PlayBuffHealthSound();
         if (activeBuff != BuffType.None)
         {
             StopActiveBuff();
@@ -296,6 +315,7 @@ public class PlayerController : MonoBehaviour
     public void CastAttackSpellShort()
     {
         Debug.Log("공격 속성 근접 마법 사용!");
+        PlayShortAttackSound();
 
         if (AttackShortEffect != null)
         {
@@ -330,6 +350,7 @@ public class PlayerController : MonoBehaviour
     public void CastSpeedSpellShort()
     {
         Debug.Log("속도 속성 근접 마법 사용!");
+        PlayShortSpeedSound();
 
         if (SpeedShortEffect != null)
         {
@@ -369,6 +390,7 @@ public class PlayerController : MonoBehaviour
     public void CastHealthSpellShort()
     {
         Debug.Log("체력 속성 근접 마법 사용!");
+        PlayShortHealthSound();
 
         if (HealthShortEffect != null)
         {
@@ -399,6 +421,74 @@ public class PlayerController : MonoBehaviour
         if (HealthShortEffect != null)
         {
             HealthShortEffect.SetActive(false); // 근접 마법 이펙트 비활성화
+        }
+    }
+
+    private void PlayLongAttackSound()
+    {
+        if (LongAttackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(LongAttackSound); 
+        }
+    }
+
+    private void PlayLongSpeedSound()
+    {
+        if (LongSpeedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(LongSpeedSound); 
+        }
+    }
+
+    private void PlayLongHealthSound()
+    {
+        if (LongSpeedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(LongHealthSound);
+        }
+    }
+
+    private void PlayBuffHealthSound()
+    {
+        if (BuffHealthSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(BuffHealthSound);
+        }
+    }
+    private void PlayBuffAttackSound()
+    {
+        if (BuffAttackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(BuffAttackSound);
+        }
+    }
+    private void PlayBuffSpeedSound()
+    {
+        if (BuffSpeedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(BuffSpeedSound);
+        }
+    }
+
+    private void PlayShortAttackSound()
+    {
+        if (ShortAttackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ShortAttackSound);
+        }
+    }
+    private void PlayShortSpeedSound()
+    {
+        if (ShortSpeedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ShortSpeedSound);
+        }
+    }
+    private void PlayShortHealthSound()
+    {
+        if (ShortHealthSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(ShortHealthSound);
         }
     }
 }

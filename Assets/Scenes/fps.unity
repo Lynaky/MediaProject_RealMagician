@@ -679,6 +679,8 @@ MonoBehaviour:
   clearUI: {fileID: 910357312}
   playerHealth: {fileID: 426961078}
   restartButton: {fileID: 194371916}
+  WinSound: {fileID: 8300000, guid: 14d6aee9d8cab5849ba2578e79ad99ef, type: 3}
+  LoseSound: {fileID: 8300000, guid: 014b4126d41a3d346900bb8a52fff8c8, type: 3}
 --- !u!4 &197373636
 Transform:
   m_ObjectHideFlags: 0
@@ -1640,6 +1642,15 @@ MonoBehaviour:
   speedBuffMultiplier: 1.5
   speedDebuffAmount: 10
   speedDebuffDuration: 3
+  LongAttackSound: {fileID: 8300000, guid: f358b4905b6a9d249a6324aa81470918, type: 3}
+  LongSpeedSound: {fileID: 8300000, guid: 2141b415533572a44973366df8b60dd3, type: 3}
+  LongHealthSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
+  BuffAttackSound: {fileID: 8300000, guid: d60173fadc82e0144bf763bb423590d3, type: 3}
+  BuffSpeedSound: {fileID: 8300000, guid: 88837ad5b034006428b5572a83cdff1b, type: 3}
+  BuffHealthSound: {fileID: 8300000, guid: 8900f2091847ed74598754d7e4ffd7fa, type: 3}
+  ShortAttackSound: {fileID: 8300000, guid: 1a61cfdcbc1dee14a9c0988e70acc571, type: 3}
+  ShortSpeedSound: {fileID: 8300000, guid: e33037ccf9e80704b8acd20b8da8abce, type: 3}
+  ShortHealthSound: {fileID: 8300000, guid: 16b307f5eff44eb44896e4e8f228a072, type: 3}
 --- !u!114 &426961076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1654,6 +1665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpellbook: 0
   playerController: {fileID: 0}
+  switchSound: {fileID: 8300000, guid: f8c09b85f3fb30542830491543d4b826, type: 3}
 --- !u!114 &426961077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1677,6 +1689,9 @@ MonoBehaviour:
   - {fileID: 2115210092}
   - {fileID: 119425387}
   - {fileID: 859535320}
+  openSound: {fileID: 8300000, guid: ba39bf8baf6d13046889b2d64822381a, type: 3}
+  pointConnectSound: {fileID: 8300000, guid: 35cf7766e9e2aa542811e896fde57989, type: 3}
+  errorSound: {fileID: 8300000, guid: 42b8a81319c443547a839df4bc8f6863, type: 3}
 --- !u!114 &426961078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1698,6 +1713,7 @@ MonoBehaviour:
   - {fileID: 1235612266}
   damageMaterial: {fileID: 2100000, guid: cdd835373a4c3ce4c862b2dc3a3c9d5d, type: 2}
   damageColorDuration: 1
+  HittedSound: {fileID: 8300000, guid: 633a8b13df293cb4691dda2f74592210, type: 3}
 --- !u!1 &455335017
 GameObject:
   m_ObjectHideFlags: 0
@@ -3598,6 +3614,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4df07717dbbc6674fb2a181d8d311e9e, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: 4df07717dbbc6674fb2a181d8d311e9e, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -3925,7 +3945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 491896524240455244, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -7.12
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1603570525373721333, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: m_Name
@@ -3941,7 +3961,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1666344455012723978, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 22.11
+      value: 28.980076
       objectReference: {fileID: 0}
     - target: {fileID: 1666344455012723978, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3971,14 +3991,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3337300517029707264, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: m_Constraints
+      value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 3337300517029707264, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 426961068}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: DashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4b4e10225b24f634ea3b22c4817bea35, type: 3}
+    - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: moveSpeed
-      value: 40
+      value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: dashDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: AttackSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4c557f8109ce0644fb21b6b9bb39f741, type: 3}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: attackRange
       value: 4
@@ -3989,7 +4029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: dashDuration
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: dashSpeedMultiplier
@@ -4011,6 +4051,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 1000
       objectReference: {fileID: 0}
+    - target: {fileID: 8141253856759572294, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: HittedSound
+      value: 
+      objectReference: {fileID: 8300000, guid: e5e1c2efdacf4cc4ea58f89c2e75c31d, type: 3}
     - target: {fileID: 8141253856759572294, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: healthSlider
       value: 

@@ -15,7 +15,9 @@ public class PlayerHealth : MonoBehaviour
 
     private Dictionary<SkinnedMeshRenderer, Material> originalMaterials = new Dictionary<SkinnedMeshRenderer, Material>(); // 원래 메터리얼을 저장하는 딕셔너리
     private Animator animator;
-
+    
+    public AudioClip HittedSound; // 점을 연결할 때 사운드
+    private AudioSource audioSource; // 오디오 소스
     void Start()
     {
         currentHealth = maxHealth;
@@ -40,6 +42,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         animator = GetComponent<Animator>();
+        audioSource = gameObject.AddComponent<AudioSource>(); // 오디오 소스 추가
     }
 
     public void TakeDamage(float damageAmount)
@@ -50,6 +53,7 @@ public class PlayerHealth : MonoBehaviour
             healthSlider.value = currentHealth;
         }
         Debug.Log("Player Health: " + currentHealth);
+        PlayHittedSound();
 
         StartCoroutine(FlashDamageMaterial());
 
@@ -108,5 +112,13 @@ public class PlayerHealth : MonoBehaviour
         }
 
         // 플레이어 사망 로직 추가 (예: 게임 오버 화면 표시 등)
+    }
+
+    private void PlayHittedSound()
+    {
+        if (HittedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(HittedSound);
+        }
     }
 }

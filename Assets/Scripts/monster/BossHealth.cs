@@ -15,6 +15,9 @@ public class BossHealth : MonoBehaviour
     private BossController bossController;
     public Slider healthSlider; // 보스 체력 슬라이더
 
+    public AudioClip HittedSound; // 점을 연결할 때 사운드
+    private AudioSource audioSource; // 오디오 소스
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -41,6 +44,8 @@ public class BossHealth : MonoBehaviour
             healthSlider.maxValue = maxHealth;
             healthSlider.value = currentHealth;
         }
+
+        audioSource = gameObject.AddComponent<AudioSource>(); // 오디오 소스 추가
     }
 
     public bool IsAlive()
@@ -52,7 +57,7 @@ public class BossHealth : MonoBehaviour
     {
         currentHealth -= damageAmount;
         Debug.Log("Boss Health: " + currentHealth);
-
+        PlayHittedSound();
         if (healthSlider != null)
         {
             healthSlider.value = currentHealth;
@@ -91,6 +96,14 @@ public class BossHealth : MonoBehaviour
         }
 
         Destroy(gameObject, 60f); // 사망 후 60초 뒤에 오브젝트 제거
+    }
+
+    private void PlayHittedSound()
+    {
+        if (HittedSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(HittedSound);
+        }
     }
 
 }

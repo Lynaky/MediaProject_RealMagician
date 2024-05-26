@@ -14,6 +14,8 @@ public class BossController : MonoBehaviour
     public float maxDashInterval = 10f; // 최대 돌진 간격
     public float dashDuration = 1f; // 돌진 지속 시간
 
+    public float dashDamage = 10f; // 돌진 중 플레이어에게 줄 데미지
+
     private bool isAttacking = false;
     private bool isDashing = false;
     private Animator animator;
@@ -23,6 +25,9 @@ public class BossController : MonoBehaviour
     public GameObject debuffEffect; // 디버프 이펙트 파티클 시스템
 
     private Coroutine speedDebuffCoroutine; // 현재 적용된 속도 디버프 코루틴
+    public AudioClip AttackSound; 
+    public AudioClip DashSound; 
+    private AudioSource audioSource; // 오디오 소스
 
     void Start()
     {
@@ -41,6 +46,8 @@ public class BossController : MonoBehaviour
         }
 
         StartCoroutine(DashRoutine()); // 돌진 패턴 시작
+
+        audioSource = gameObject.AddComponent<AudioSource>(); // 오디오 소스 추가
     }
 
     void Update()
@@ -76,7 +83,7 @@ public class BossController : MonoBehaviour
     {
         isAttacking = true;
         Debug.Log("Boss attacking player...");
-
+        PlayAttackSound();
         // 플레이어에게 데미지를 주는 로직 추가
         player.GetComponent<PlayerHealth>().TakeDamage(attackDamage);
 
@@ -122,6 +129,7 @@ public class BossController : MonoBehaviour
             yield return new WaitForSeconds(waitTime);
 
             StartCoroutine(DashTowardsPlayer());
+
         }
     }
 
@@ -132,7 +140,7 @@ public class BossController : MonoBehaviour
         float dashSpeed = originalMoveSpeed * dashSpeedMultiplier;
 
         animator.SetBool("isDashing", true); // 돌진 애니메이션 시작
-
+        PlayDashSound();
         while (Time.time < dashStartTime + dashDuration)
         {
             MoveTowardsPlayer(dashSpeed); // 플레이어를 추적하며 이동
@@ -142,5 +150,34 @@ public class BossController : MonoBehaviour
         animator.SetBool("isDashing", false); // 돌진 애니메이션 종료
 
         isDashing = false;
+    }
+
+    private void PlayAttackSound()
+    {
+        if (AttackSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(AttackSound);
+        }
+    }
+
+    private void PlayDashSound()
+    {
+        if (DashSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(DashSound);
+        }
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (isDashing && collision.gameObject.CompareTag("Player"))
+        {
+            PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+            {
+                playerHealth.TakeDamage(dashDamage); // 돌진 중 플레이어에게 데미지
+                Debug.Log("Player hit by dashing boss!");
+            }
+        }
     }
 }

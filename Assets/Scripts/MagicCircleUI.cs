@@ -15,11 +15,15 @@ public class MagicCircleUI : MonoBehaviour
     private bool buffPattern = false;
     private bool shortPattern = false;
 
-
     private HashSet<int> selectedPointsSet = new HashSet<int>();
     private SpellbookSystem spellbookSystem;
 
     private Color defaultColor = new Color(1f, 1f, 1f, 0.6f);
+
+    public AudioClip openSound; // 마법진 여는 사운드
+    public AudioClip pointConnectSound; // 점을 연결할 때 사운드
+    public AudioClip errorSound; // 점을 연결할 때 사운드
+    private AudioSource audioSource; // 오디오 소스
 
     void Start()
     {
@@ -50,6 +54,8 @@ public class MagicCircleUI : MonoBehaviour
                 point.GetComponent<Image>().color = defaultColor;
             }
         }
+
+        audioSource = gameObject.AddComponent<AudioSource>(); // 오디오 소스 추가
     }
 
     void Update()
@@ -88,6 +94,11 @@ public class MagicCircleUI : MonoBehaviour
                 magicCircleCanvas.SetActive(isDrawing);
             }
 
+            if (isDrawing)
+            {
+                PlayOpenSound(); // 마법진 여는 사운드 재생
+            }
+
             if (!isDrawing)
             {
                 ValidatePattern();
@@ -120,6 +131,7 @@ public class MagicCircleUI : MonoBehaviour
                     selectedPattern.Add(i);
                     points[i].GetComponent<Image>().color = GetSelectedColor();
                     Debug.Log("Point " + i + " selected");
+                    PlayPointConnectSound(); // 점을 연결할 때 사운드 재생
                 }
             }
         }
@@ -177,6 +189,7 @@ public class MagicCircleUI : MonoBehaviour
         else
         {
             Debug.Log("잘못된 패턴 입력");
+            PlayErrorSound();
         }
 
         CloseMagicCircleUI();
@@ -204,5 +217,29 @@ public class MagicCircleUI : MonoBehaviour
     public bool IsDrawing()
     {
         return isDrawing;
+    }
+
+    private void PlayOpenSound()
+    {
+        if (openSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(openSound); // 마법진 여는 사운드 재생
+        }
+    }
+
+    private void PlayPointConnectSound()
+    {
+        if (pointConnectSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(pointConnectSound); // 점을 연결할 때 사운드 재생
+        }
+    }
+
+    private void PlayErrorSound()
+    {
+        if (errorSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(errorSound); // 점을 연결할 때 사운드 재생
+        }
     }
 }

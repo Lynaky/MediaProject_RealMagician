@@ -11,7 +11,7 @@ public class DamageArea : MonoBehaviour
     public float damageInterval = 1f; // 데미지를 주는 간격
     public float lifetime = 5f; // 데미지 장판의 생명주기
     public bool isSpeedDebuff; // 속도 감소 스킬 여부
-    public float speedDebuffAmount = 10f; // 속도 감소량
+    public float speedDebuffRate = 0.6f; // 속도 감소량
     public float speedDebuffDuration = 3f; // 속도 감소 지속 시간
     public bool isHealingSpell; // 체력 회복 스킬 여부
     public PlayerHealth playerHealth; // 플레이어의 체력
@@ -68,7 +68,7 @@ public class DamageArea : MonoBehaviour
                         BossController bossController = enemy.GetComponent<BossController>();
                         if (bossController != null)
                         {
-                            bossController.ApplySpeedDebuff(speedDebuffAmount, speedDebuffDuration);
+                            bossController.ApplySpeedDebuff(speedDebuffRate, speedDebuffDuration);
                         }
                     }
                 }

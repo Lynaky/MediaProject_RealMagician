@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     public LayerMask layerMask2; // 무시할 레이어를 설정
     public float buffDuration = 5f; // 버프 지속 시간
     public float speedBuffMultiplier = 1.5f; // 속도 버프 배율
-    public float speedDebuffAmount = 10f; // 속도 디버프 양
+    public float speedDebuffRate = 0.6f; // 속도 디버프 양
     public float speedDebuffDuration = 3f; // 속도 디버프 지속 시간
 
     private PlayerHealth playerHealth;
@@ -369,7 +369,7 @@ public class PlayerController : MonoBehaviour
                     BossController bossController = hitCollider.GetComponent<BossController>();
                     if (bossController != null)
                     {
-                        bossController.ApplySpeedDebuff(speedDebuffAmount, speedDebuffDuration); // 보스에게 속도 디버프 적용
+                        bossController.ApplySpeedDebuff(speedDebuffRate, speedDebuffDuration); // 보스에게 속도 디버프 적용
                     }
                 }
             }

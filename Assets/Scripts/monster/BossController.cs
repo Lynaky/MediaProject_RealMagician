@@ -25,9 +25,11 @@ public class BossController : MonoBehaviour
     public GameObject debuffEffect; // 디버프 이펙트 파티클 시스템
 
     private Coroutine speedDebuffCoroutine; // 현재 적용된 속도 디버프 코루틴
-    public AudioClip AttackSound; 
-    public AudioClip DashSound; 
+    public AudioClip AttackSound;
+    public AudioClip DashSound;
     private AudioSource audioSource; // 오디오 소스
+
+    private Coroutine dashCoroutine; // 현재 실행 중인 돌진 코루틴
 
     void Start()
     {
@@ -96,18 +98,18 @@ public class BossController : MonoBehaviour
         animator.SetTrigger("Die");
     }
 
-    public void ApplySpeedDebuff(float debuffAmount, float duration)
+    public void ApplySpeedDebuff(float debuffMultiplier, float duration)
     {
         if (speedDebuffCoroutine != null)
         {
             StopCoroutine(speedDebuffCoroutine); // 기존 디버프 코루틴 중지
         }
-        speedDebuffCoroutine = StartCoroutine(SpeedDebuff(debuffAmount, duration));
+        speedDebuffCoroutine = StartCoroutine(SpeedDebuff(debuffMultiplier, duration));
     }
 
-    private IEnumerator SpeedDebuff(float debuffAmount, float duration)
+    private IEnumerator SpeedDebuff(float debuffMultiplier, float duration)
     {
-        moveSpeed = originalMoveSpeed - debuffAmount; // 속도 디버프 갱신
+        moveSpeed = originalMoveSpeed * debuffMultiplier; // 속도 디버프 갱신
         if (debuffEffect != null)
         {
             debuffEffect.SetActive(true);
@@ -128,8 +130,11 @@ public class BossController : MonoBehaviour
             float waitTime = Random.Range(minDashInterval, maxDashInterval);
             yield return new WaitForSeconds(waitTime);
 
-            StartCoroutine(DashTowardsPlayer());
-
+            if (dashCoroutine != null)
+            {
+                StopCoroutine(dashCoroutine); // 기존 돌진 코루틴 중지
+            }
+            dashCoroutine = StartCoroutine(DashTowardsPlayer());
         }
     }
 

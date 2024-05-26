@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3071203166238714258, guid: 2cd1032120c5181478e4539f714cbac3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3071203166238714258, guid: 2cd1032120c5181478e4539f714cbac3, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2850,7 +2850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: attackDamage
-      value: 34
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4142265880660143949, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
+      propertyPath: dashDuration
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7049057227858601307, guid: ed0b2a07f7e7d1340b8bac588a46dc7e, type: 3}
       propertyPath: m_AnchorMax.x

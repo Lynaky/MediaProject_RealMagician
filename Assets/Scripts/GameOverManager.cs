@@ -9,10 +9,11 @@ public class GameOverManager : MonoBehaviour
     public PlayerHealth playerHealth;
     public Button restartButton;
 
+    public AudioClip ClickSound;
     public AudioClip WinSound;
     public AudioClip LoseSound;
     private AudioSource audioSource; // 오디오 소스
-
+    public AudioSource bgmSource; // 배경음악 오디오 소스
 
     void Start()
     {
@@ -34,6 +35,11 @@ public class GameOverManager : MonoBehaviour
     public void GameOver()
     {
         gameOverUI.SetActive(true);
+        if (bgmSource != null)
+        {
+            bgmSource.Stop(); // 배경음악 멈추기
+        }
+
         PlayLoseSound();
         Time.timeScale = 0f; // 게임 시간을 멈춥니다.
         Cursor.lockState = CursorLockMode.None;
@@ -43,6 +49,12 @@ public class GameOverManager : MonoBehaviour
     public void GameClear()
     {
         clearUI.SetActive(true);
+        if (bgmSource != null)
+        {
+            bgmSource.Stop(); // 배경음악 멈추기
+        }
+
+
         PlayWinSound();
         Time.timeScale = 0f; // 게임 시간을 멈춥니다.
         Cursor.lockState = CursorLockMode.None;
@@ -51,6 +63,7 @@ public class GameOverManager : MonoBehaviour
 
     public void RestartGame()
     {
+        PlayClickSound();
         Time.timeScale = 1f; // 게임 시간을 다시 진행시킵니다.
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); // 현재 씬을 다시 로드합니다.
     }
@@ -68,6 +81,14 @@ public class GameOverManager : MonoBehaviour
         if (LoseSound != null && audioSource != null)
         {
             audioSource.PlayOneShot(LoseSound);
+        }
+    }
+
+    private void PlayClickSound()
+    {
+        if (audioSource != null)
+        {
+            audioSource.PlayOneShot(ClickSound);
         }
     }
 }

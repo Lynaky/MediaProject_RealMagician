@@ -82,6 +82,15 @@ public class BossHealth : MonoBehaviour
         isAlive = false;
         // 사망 애니메이션 등 추가
         bossController.Die();
+
+        // 게임 클리어 처리 추가
+        GameOverManager gameOverManager = FindObjectOfType<GameOverManager>();
+        if (gameOverManager != null)
+        {
+            gameOverManager.GameClear();
+        }
+
         Destroy(gameObject, 60f); // 사망 후 60초 뒤에 오브젝트 제거
     }
+
 }

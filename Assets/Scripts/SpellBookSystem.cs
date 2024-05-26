@@ -95,5 +95,5 @@ public class SpellbookSystem : MonoBehaviour
                 break;
         }
     }
-   
+
 }

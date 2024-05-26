@@ -92,6 +92,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return; // 게임 오버 또는 클리어 상태에서 업데이트 중지
+
         if (spellbookSystem != null)
         {
             spellbookSystem.HandleSpellbookSwitch();
@@ -106,6 +108,8 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+
 
     public void CastAttackSpellLong()
     {
@@ -398,4 +402,3 @@ public class PlayerController : MonoBehaviour
         }
     }
 }
-
